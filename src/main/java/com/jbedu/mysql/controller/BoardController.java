@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jbedu.mysql.command.BCommand;
+import com.jbedu.mysql.command.BDeleterCommand;
 import com.jbedu.mysql.command.BListCommand;
 import com.jbedu.mysql.command.BWriteCommand;
 import com.jbedu.mysql.dao.BoardDao;
@@ -63,9 +64,13 @@ public class BoardController {
 	@RequestMapping(value = "/deleteOk")
 	public String deleteOk(HttpServletRequest request, Model model) {
 		
-		BoardDao boardDao = new BoardDao();
-		int deleteFlag = boardDao.boardDelete(request.getParameter("bnum"));
+//		BoardDao boardDao = new BoardDao();
+//		int deleteFlag = boardDao.boardDelete(request.getParameter("bnum"));
 		//글 삭제 성공 deleteFlag = 1, 실패 0
+		
+		model.addAttribute("request", request);
+		command = new BDeleterCommand();
+		int deleteFlag = command.execute(model);
 		
 		if(deleteFlag != 1) {//존재하지 않는 글번호 삭제 시도->삭제 실패
 			
