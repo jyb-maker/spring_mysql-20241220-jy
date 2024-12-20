@@ -95,8 +95,40 @@ public class BoardDao {
 	}
 	
 	
-	
-	
+	//글 삭제 	
+	public int boardDelete(int bnum) {
+		String sql = "DELETE FROM mvc_board WHERE bnum=?";
+		
+		Connection conn =null;
+		PreparedStatement pstmt = null;
+		int success = 0;
+		
+		try {
+			Class.forName(driverName);
+			conn = DriverManager.getConnection(url, username, password);
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, bnum);
+			
+			pstmt.addBatch();
+			
+			success = pstmt.executeUpdate();  // 삭제 성공하면 1, 실패하면 0
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return success;
+	}	
 	
 		
 	
