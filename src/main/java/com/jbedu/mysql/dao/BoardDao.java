@@ -96,7 +96,7 @@ public class BoardDao {
 	
 	
 	//글 삭제 	
-	public int boardDelete(int bnum) {
+	public int boardDelete(String bnum) {
 		String sql = "DELETE FROM mvc_board WHERE bnum=?";
 		
 		Connection conn =null;
@@ -108,7 +108,7 @@ public class BoardDao {
 			conn = DriverManager.getConnection(url, username, password);
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, bnum);
+			pstmt.setString(1, bnum);
 			
 			pstmt.addBatch();
 			
